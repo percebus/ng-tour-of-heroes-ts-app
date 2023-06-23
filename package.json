@@ -1,6 +1,6 @@
 {
   "name": "ng-tour-of-heroes-ts-app",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "prettier": "prettier .",
     "prettier:check": "npm run prettier -- --check",
@@ -11,8 +11,8 @@
     "ng:build": "npm run ng -- build",
     "ng:build:watch": "npm run ng:build -- --watch --configuration development",
     "ng:test": "npm run ng -- test",
-    "lint": "npm run prettier:check && run ng:lint",
-    "style": "np run prettier:write",
+    "lint": "npm run prettier:check && npm run ng:lint",
+    "style": "npm run prettier:write",
     "poststyle": "npm run lint",
     "dist": "npm run ng:build",
     "start": "npm run ng:serve",
