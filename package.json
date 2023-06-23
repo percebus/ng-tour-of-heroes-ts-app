@@ -3,11 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "lint": "ng lint"
+    "ng:lint": "npm run ng -- lint",
+    "ng:serve": "npm run ng -- serve --open",
+    "ng:build": "npm run ng -- build",
+    "ng:build:watch": "npm run ng:build -- --watch --configuration development",
+    "ng:test": "npm run ng -- test",
+    "lint": "npm run ng:lint",
+    "dist": "npm run ng:build",
+    "start": "npm run ng:serve"
   },
   "private": true,
   "dependencies": {
