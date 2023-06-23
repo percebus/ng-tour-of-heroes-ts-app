@@ -2,15 +2,22 @@
   "name": "ng-tour-of-heroes-ts-app",
   "version": "0.0.0",
   "scripts": {
+    "prettier": "prettier .",
+    "prettier:check": "npm run prettier -- --check",
+    "prettier:write": "npm run prettier -- --write",
     "ng": "ng",
     "ng:lint": "npm run ng -- lint",
     "ng:serve": "npm run ng -- serve --open",
     "ng:build": "npm run ng -- build",
     "ng:build:watch": "npm run ng:build -- --watch --configuration development",
     "ng:test": "npm run ng -- test",
-    "lint": "npm run ng:lint",
+    "lint": "npm run prettier:check && run ng:lint",
+    "style": "np run prettier:write",
+    "poststyle": "npm run lint",
     "dist": "npm run ng:build",
-    "start": "npm run ng:serve"
+    "start": "npm run ng:serve",
+    "predev": "npm run style",
+    "dev": "npm run ng:serve"
   },
   "private": true,
   "dependencies": {
@@ -39,12 +46,15 @@
     "@typescript-eslint/eslint-plugin": "5.59.7",
     "@typescript-eslint/parser": "5.59.7",
     "eslint": "^8.40.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "prettier": "^2.8.8",
     "typescript": "~5.1.3"
   }
 }
