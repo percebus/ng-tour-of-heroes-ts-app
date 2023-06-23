@@ -9,7 +9,12 @@ describe('RootComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [RootComponent, MessagesComponent, HeroesComponent, HeroDetailComponent],
+      declarations: [
+        RootComponent,
+        MessagesComponent,
+        HeroesComponent,
+        HeroDetailComponent,
+      ],
     })
   );
 
