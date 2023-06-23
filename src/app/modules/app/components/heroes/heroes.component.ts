@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 import { Hero } from 'src/app/types/hero';
-
-const windstormHero: Hero = {
-  id: 1,
-  name: 'Windstorm'
-};
+import { heroes } from 'src/data/mock/heroes';
 
 @Component({
   selector: 'app-heroes',
@@ -12,5 +8,10 @@ const windstormHero: Hero = {
   styleUrls: ['./heroes.component.scss'],
 })
 export class HeroesComponent {
-  hero: Hero = windstormHero;
+  heroes: Array<Hero> = heroes;
+
+  selectedHero?: Hero;
+  onSelect(hero: Hero): void {
+    this.selectedHero = hero;
+  }
 }

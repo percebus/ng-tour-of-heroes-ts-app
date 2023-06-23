@@ -14,6 +14,8 @@
     "lint": "npm run prettier:check && npm run ng:lint",
     "style": "npm run prettier:write",
     "poststyle": "npm run lint",
+    "pretest": "npm run style",
+    "test": "npm run ng:test",
     "dist": "npm run ng:build",
     "start": "npm run ng:serve",
     "predev": "npm run style",
