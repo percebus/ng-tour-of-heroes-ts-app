@@ -2,12 +2,13 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RootComponent } from './root.component';
 import { HeroesComponent } from '../heroes/heroes.component';
+import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
 
 describe('RootComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [RootComponent, HeroesComponent],
+      declarations: [RootComponent, HeroesComponent, HeroDetailComponent],
     })
   );
 
