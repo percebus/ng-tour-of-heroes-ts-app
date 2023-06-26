@@ -1,22 +1,32 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClient } from '@angular/common/http';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { RootComponent } from './root.component';
-import { MessagesComponent } from '../messages/messages.component';
-import { HeroesComponent } from '../heroes/heroes.component';
-import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
+import { MessagesComponent } from 'src/modules/app/message/component/messages.component';
 
 describe('RootComponent', () => {
-  beforeEach(() =>
+  let component: RootComponent;
+  let fixture: ComponentFixture<RootComponent>;
+  let httpClient: HttpClient;
+  let httpTestingController: HttpTestingController;
+
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [
-        RootComponent,
-        MessagesComponent,
-        HeroesComponent,
-        HeroDetailComponent,
-      ],
-    })
-  );
+      imports: [RouterTestingModule, HttpClientTestingModule],
+      declarations: [RootComponent, MessagesComponent],
+    });
+
+    httpClient = TestBed.inject(HttpClient);
+    httpTestingController = TestBed.inject(HttpTestingController);
+
+    fixture = TestBed.createComponent(RootComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(RootComponent);
