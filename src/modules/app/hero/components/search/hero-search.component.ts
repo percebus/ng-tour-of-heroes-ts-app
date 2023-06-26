@@ -2,8 +2,8 @@ import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 
-import { Hero } from '../../../../types/hero';
-import { HeroService } from '../../services/hero/hero.service';
+import { Hero } from '../../types/hero';
+import { HeroService } from '../../service/hero.service';
 
 @Component({
   selector: 'app-hero-search',
