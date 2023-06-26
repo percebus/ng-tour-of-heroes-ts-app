@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
-import { HeroesComponent } from './heroes.component';
-import { HeroDetailComponent } from '../detail/hero-detail.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { HeroesComponent } from './heroes.component';
+import { HeroDetailComponent } from '../detail/hero-detail.component';
 
 describe('HeroesComponent', () => {
   let component: HeroesComponent;
