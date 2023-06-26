@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Hero } from 'src/app/types/hero';
 import { HeroService } from '../../services/hero/hero.service';
-import { MessageService } from '../../services/message/message.service';
 
 @Component({
   selector: 'app-heroes',
@@ -9,31 +9,43 @@ import { MessageService } from '../../services/message/message.service';
   styleUrls: ['./heroes.component.scss'],
 })
 export class HeroesComponent implements OnInit {
+  // TODO? Move to HeroService ?
   heroes: Array<Hero> = [];
 
-  selectedHero?: Hero;
-
   constructor(
+    // private messageService: MessageService // TODO? or XXX?
     private heroService: HeroService,
-    private messageService: MessageService
+    private location: Location
   ) {}
 
-  // XXX DEPRECATED dead code
-  // onSelect(hero: Hero): void {
-  //   this.selectedHero = hero;
-  //   this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
-  // }
-
-  update(): void {
+  refresh(): void {
+    console.info('HeroesComponent: refresh()');
     this.heroService
-      .getAll() // returns Observable
+      .getAll() // returns Observable< Hero[] >
       .subscribe((heroes) => (this.heroes = heroes));
-
-    console.info('HeroesComponent: update()');
   }
 
   ngOnInit(): void {
-    this.update();
     console.info('HeroesComponent: OnInit()');
+    this.refresh();
+  }
+
+  add(name: string): void {
+    name = name.trim();
+    if (!name) {
+      // TODO? throw?
+      return;
+    }
+
+    this.heroService
+      .post({ name } as Hero) //
+      .subscribe(this.heroes.push);
+  }
+
+  delete(hero: Hero): void {
+    this.heroes = this.heroes.filter((oHero) => oHero !== hero);
+    this.heroService //
+      .delete(hero) //
+      .subscribe();
   }
 }
