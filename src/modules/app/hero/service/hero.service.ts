@@ -34,6 +34,8 @@ export class HeroService {
    * @param result - optional value to return as the observable result
    */
   private handleError<T>(operation = 'operation', result?: T) {
+    // FIXME
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
       console.warn(error); // log to console instead
@@ -57,12 +59,18 @@ export class HeroService {
   }
 
   /** PUT: update the hero on the server */
+  // FIXME
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   put(hero: Hero): Observable<any> {
     return this.http //
       .put(`${this.URL}/${hero.id}`, hero, this.httpOptions) //
       .pipe(
-        tap((_) => this.log(`updated hero id=${hero.id}`)),
-        catchError(this.handleError<any>('put'))
+        tap(() => this.log(`updated hero id=${hero.id}`)),
+        catchError(
+          // FIXMEaa
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          this.handleError<any>('put')
+        )
       );
   }
 
@@ -71,7 +79,7 @@ export class HeroService {
     return this.http //
       .delete<Hero>(`${this.URL}/${hero.id}`, this.httpOptions) //
       .pipe(
-        tap((_) => this.log(`deleted hero id=${hero.id}`)),
+        tap(() => this.log(`deleted hero id=${hero.id}`)),
         catchError(this.handleError<Hero>('deleteHero'))
       );
   }
@@ -80,7 +88,7 @@ export class HeroService {
     return this.http //
       .get<Hero>(`${this.URL}/${id}`) //
       .pipe(
-        tap((_) => this.log(`fetched hero id=${id}`)),
+        tap(() => this.log(`fetched hero id=${id}`)),
         catchError(this.handleError<Hero>(`get id=${id}`))
       );
   }
@@ -89,7 +97,7 @@ export class HeroService {
     return this.http //
       .get<Hero[]>(this.URL) //
       .pipe(
-        tap((_) => this.log('fetched heroes')),
+        tap(() => this.log('fetched heroes')),
         catchError(this.handleError<Hero[]>('getAll', []))
       );
   }
@@ -103,8 +111,8 @@ export class HeroService {
     return this.http //
       .get<Hero[]>(url) //
       .pipe(
-        tap((x) => {
-          return x.length //
+        tap((heroes: Hero[]) => {
+          return heroes.length //
             ? this.log(`found heroes matching "${name}"`)
             : this.log(`no heroes matching "${name}"`);
         }),

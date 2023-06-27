@@ -1,15 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HeroService } from './hero.service';
 
 describe('HeroService', () => {
-  let service: HeroService;
-  let httpClient: HttpClient;
-  let httpTestingController: HttpTestingController;
+  let oHeroService: HeroService;
+  let oHttpClient: HttpClient;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -17,12 +13,19 @@ describe('HeroService', () => {
       providers: [HeroService],
     });
 
-    httpClient = TestBed.inject(HttpClient);
-    httpTestingController = TestBed.inject(HttpTestingController);
-    service = TestBed.inject(HeroService);
+    oHttpClient = TestBed.inject(HttpClient);
+    oHeroService = TestBed.inject(HeroService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('is instanceof HeroService', () => {
+    expect(oHeroService).toBeInstanceOf(HeroService);
+  });
+
+  describe('Dependency Injection', () => {
+    describe('HttpClient', () => {
+      it('is instanceof HttpClient', () => {
+        expect(oHttpClient).toBeInstanceOf(HttpClient);
+      });
+    });
   });
 });
