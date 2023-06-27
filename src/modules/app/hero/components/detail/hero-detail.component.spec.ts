@@ -9,12 +9,12 @@ import {
 import { HeroDetailComponent } from './hero-detail.component';
 
 describe('HeroDetailComponent', () => {
-  let component: HeroDetailComponent;
-  let fixture: ComponentFixture<HeroDetailComponent>;
-  let router: Router;
-  let route: ActivatedRoute;
-  let httpClient: HttpClient;
-  let httpTestingController: HttpTestingController;
+  let oHeroDetailComponent: HeroDetailComponent;
+  let oComponentFixture: ComponentFixture<HeroDetailComponent>;
+  let oRouter: Router;
+  let oActivatedRoute: ActivatedRoute;
+  let oHttpClient: HttpClient;
+  let renderedHTML: HTMLElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -22,18 +22,52 @@ describe('HeroDetailComponent', () => {
       declarations: [HeroDetailComponent],
     }).compileComponents();
 
-    router = TestBed.inject(Router);
-    route = TestBed.inject(ActivatedRoute);
+    oRouter = TestBed.inject(Router);
+    oActivatedRoute = TestBed.inject(ActivatedRoute);
 
-    httpClient = TestBed.inject(HttpClient);
-    httpTestingController = TestBed.inject(HttpTestingController);
+    oHttpClient = TestBed.inject(HttpClient);
 
-    fixture = TestBed.createComponent(HeroDetailComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    oComponentFixture = TestBed.createComponent(HeroDetailComponent);
+    oHeroDetailComponent = oComponentFixture.componentInstance;
+    oComponentFixture.detectChanges();
+    renderedHTML = oComponentFixture.nativeElement;
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('is instanceof HeroDetailComponent', () => {
+    expect(oHeroDetailComponent).toBeInstanceOf(HeroDetailComponent);
+  });
+
+  describe('Dependency Injection', () => {
+    describe('Router', () => {
+      it('is instanceof Router', () => {
+        expect(oRouter).toBeInstanceOf(Router);
+      });
+    });
+
+    describe('ActivatedRoute', () => {
+      it('is instanceof ActivatedRoute', () => {
+        expect(oActivatedRoute).toBeInstanceOf(ActivatedRoute);
+      });
+    });
+
+    describe('HttpClient', () => {
+      it('is instanceof HttpClient', () => {
+        expect(oHttpClient).toBeInstanceOf(HttpClient);
+      });
+    });
+  });
+
+  // FIXME
+  // Mock route & service
+  xdescribe('rendering', () => {
+    describe('when hero is not defined', () => {
+      describe('Details', () => {
+        it('gets rendered', () => {
+          const header =
+            renderedHTML.querySelector('.hero-detail h2')?.textContent;
+          expect(header).toContain('Details');
+        });
+      });
+    });
   });
 });
