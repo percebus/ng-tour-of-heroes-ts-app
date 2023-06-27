@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Hero } from '../../hero/types/hero';
-import { heroes } from '../data/heroes';
+import { Hero } from '../../../hero/types/hero';
+import { heroes } from '../../data/heroes';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,9 @@ export class InMemoryDataService implements InMemoryDbService {
   // hero id + 1.
   genId(heroes: Hero[]): number {
     const id =
-      heroes.length > 0 ? Math.max(...heroes.map((oHero) => oHero.id)) : 10;
+      heroes.length > 0 //
+        ? Math.max(...heroes.map((oHero) => oHero.id))
+        : 10;
 
     return id + 1;
   }

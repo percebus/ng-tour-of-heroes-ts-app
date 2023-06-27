@@ -25,3 +25,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Resources
+
+- [How To Read a JSON File From Assets in Angular](https://betterprogramming.pub/how-to-read-a-json-file-from-assets-in-angular-7c8313cd4fb1)

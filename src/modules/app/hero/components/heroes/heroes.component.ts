@@ -19,14 +19,14 @@ export class HeroesComponent implements OnInit {
   ) {}
 
   refresh(): void {
-    console.info('HeroesComponent: refresh()');
+    // console.info('HeroesComponent: refresh()'); // DEBUG
     this.heroService
       .getAll() // returns Observable< Hero[] >
       .subscribe((heroes) => (this.heroes = heroes));
   }
 
   ngOnInit(): void {
-    console.info('HeroesComponent: OnInit()');
+    // console.info('HeroesComponent: OnInit()'); // DEBUG
     this.refresh();
   }
 

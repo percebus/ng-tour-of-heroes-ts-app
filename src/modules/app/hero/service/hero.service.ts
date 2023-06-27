@@ -2,13 +2,15 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Optional } from '../../types/nothing';
 import { MessageService } from '../../message/service/message.service';
 import { Hero } from '../types/hero';
+import { HeroAPI } from '../types/hero-api';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HeroService {
+export class HeroService implements HeroAPI {
   private URL = 'api/heroes'; // URL to web api
   httpOptions = {
     headers: new HttpHeaders({
@@ -84,7 +86,7 @@ export class HeroService {
       );
   }
 
-  getById(id: number): Observable<Hero> {
+  getById(id: number): Observable<Optional<Hero>> {
     return this.http //
       .get<Hero>(`${this.URL}/${id}`) //
       .pipe(

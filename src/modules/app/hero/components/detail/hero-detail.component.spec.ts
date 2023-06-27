@@ -1,11 +1,11 @@
-import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { Hero } from '../../types/hero';
+import { HeroAPI } from '../../types/hero-api';
+import { HeroService } from '../../service/hero.service';
+import { MockHeroService } from '../../../hero-mock/services/mock/hero.mock-service';
 import { HeroDetailComponent } from './hero-detail.component';
 
 describe('HeroDetailComponent', () => {
@@ -13,24 +13,22 @@ describe('HeroDetailComponent', () => {
   let oComponentFixture: ComponentFixture<HeroDetailComponent>;
   let oRouter: Router;
   let oActivatedRoute: ActivatedRoute;
-  let oHttpClient: HttpClient;
-  let renderedHTML: HTMLElement;
+  let heroService: HeroAPI;
+  const mockHeroService = new MockHeroService();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
       declarations: [HeroDetailComponent],
+      providers: [{ provider: HeroService, useValue: mockHeroService }], // FIXME
     }).compileComponents();
 
     oRouter = TestBed.inject(Router);
     oActivatedRoute = TestBed.inject(ActivatedRoute);
 
-    oHttpClient = TestBed.inject(HttpClient);
-
     oComponentFixture = TestBed.createComponent(HeroDetailComponent);
     oHeroDetailComponent = oComponentFixture.componentInstance;
-    oComponentFixture.detectChanges();
-    renderedHTML = oComponentFixture.nativeElement;
+    heroService = oComponentFixture.debugElement.injector.get(HeroService);
   });
 
   it('is instanceof HeroDetailComponent', () => {
@@ -50,9 +48,11 @@ describe('HeroDetailComponent', () => {
       });
     });
 
-    describe('HttpClient', () => {
-      it('is instanceof HttpClient', () => {
-        expect(oHttpClient).toBeInstanceOf(HttpClient);
+    describe('HeroService', () => {
+      // FIXME
+      xit('is instanceof MockHeroService', () => {
+        expect(heroService).not.toBeInstanceOf(HeroService);
+        expect(heroService).toBeInstanceOf(MockHeroService);
       });
     });
   });
@@ -60,12 +60,23 @@ describe('HeroDetailComponent', () => {
   // FIXME
   // Mock route & service
   xdescribe('rendering', () => {
-    describe('when hero is not defined', () => {
+    let renderedHTML: HTMLElement;
+
+    describe('hero.id 42', () => {
+      // beforeEach(() => {});
+
       describe('Details', () => {
         it('gets rendered', () => {
-          const header =
-            renderedHTML.querySelector('.hero-detail h2')?.textContent;
-          expect(header).toContain('Details');
+          const testHero: Hero = { id: 42, name: 'Test' };
+          jest
+            .spyOn(oActivatedRoute.snapshot.paramMap, 'get')
+            .mockReturnValueOnce(testHero.id.toString());
+
+          oHeroDetailComponent.hero = testHero;
+          oComponentFixture.detectChanges();
+          renderedHTML = oComponentFixture.nativeElement;
+          const header = renderedHTML.querySelector('.hero-detail');
+          expect(header?.textContent).toContain('Details');
         });
       });
     });
