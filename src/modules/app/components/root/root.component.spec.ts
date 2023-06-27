@@ -5,7 +5,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { MessagesComponent } from 'src/modules/app/message/component/messages.component';
+import { MessagesComponent } from '../../message/component/messages.component';
 import { RootComponent } from './root.component';
 
 describe('RootComponent', () => {

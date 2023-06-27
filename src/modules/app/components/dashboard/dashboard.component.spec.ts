@@ -4,7 +4,7 @@ import {
   HttpTestingController,
   HttpClientTestingModule,
 } from '@angular/common/http/testing';
-import { HeroSearchComponent } from 'src/modules/app/hero/components/search/hero-search.component';
+import { HeroSearchComponent } from '../../hero/components/search/hero-search.component';
 import { DashboardComponent } from './dashboard.component';
 
 describe('DashboardComponent', () => {
