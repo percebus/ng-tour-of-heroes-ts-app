@@ -1,5 +1,5 @@
-.angular
-.vscode
-coverage
+.angular/
+.vscode/
 node_modules/
+coverage/
 dist/
