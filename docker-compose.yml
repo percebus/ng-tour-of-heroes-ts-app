@@ -1,0 +1,10 @@
+version: "3"
+services:
+  web-app:
+    build:
+      dockerfile: ./Dockerfile
+      target: http-server
+    ports:
+      - 80:4200
+    environment:
+      - PORT=4200

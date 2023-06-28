@@ -2,6 +2,10 @@
   "name": "ng-tour-of-heroes-ts-app",
   "version": "0.1.0",
   "scripts": {
+    "npm:install:global:ci": "npm install --location=global @angular/cli",
+    "npm:install:global:all": "npm install --location=global @angular/cli open-cli",
+    "setup": "npm run npm:install:global:all",
+    "setup:ci": "npm run npm:install:global:ci",
     "prettier": "prettier .",
     "prettier:check": "npm run prettier -- --check",
     "prettier:write": "npm run prettier -- --write",
@@ -21,9 +25,14 @@
     "test": "npm run jest:watch",
     "test:ci": "npm run jest:runInBand",
     "dist": "npm run ng:build",
-    "start": "npm run ng:serve",
+    "browser:80": "open-cli http://localhost:80",
+    "browser:4200": "open-cli http://localhost:4200",
     "predev": "npm run style",
-    "dev": "npm run ng:serve"
+    "dev": "npm run ng:serve",
+    "http-server": "http-server ./dist",
+    "docker:compose:up": "docker compose up --build --remove-orphans",
+    "prestart": "npm run browser:80",
+    "start": "npm run docker:compose:up"
   },
   "private": true,
   "dependencies": {
@@ -57,6 +66,7 @@
     "eslint": "^8.40.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "http-server": "^14.1.1",
     "jasmine-core": "~4.6.0",
     "jest": "^29.5.0",
     "jest-preset-angular": "^13.1.1",
