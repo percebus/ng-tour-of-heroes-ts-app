@@ -22,27 +22,35 @@ describe('HelloWorldComponent', () => {
 
   describe('rendering', () => {
     describe('by default', () => {
+      beforeEach(() => oComponentFixture.detectChanges());
+
       it('displays "Hello World!"', () => {
-        oComponentFixture.detectChanges();
+        const oHTMLElement = oComponentFixture.nativeElement //
+          .querySelector('.hello-world h1');
 
-        const heading = oComponentFixture.nativeElement.querySelector(
-          '.hello-world h1'
-        ) as HTMLElement;
+        expect(oHTMLElement.textContent).toEqual('Hello World!');
+      });
 
-        expect(heading.textContent).toEqual('Hello World!');
+      it('matches snapshot', () => {
+        expect(oComponentFixture).toMatchSnapshot();
       });
     });
 
     describe('name: "David"', () => {
-      it('displays "Hello David!"', () => {
+      beforeEach(() => {
         oHelloWorldComponent.name = 'David';
         oComponentFixture.detectChanges();
+      });
 
-        const oHTMLElement = oComponentFixture.nativeElement.querySelector(
-          '.hello-world h1'
-        ) as HTMLElement;
+      it('displays "Hello David!"', () => {
+        const oHTMLElement = oComponentFixture.nativeElement //
+          .querySelector('.hello-world h1');
 
         expect(oHTMLElement.textContent).toEqual('Hello David!');
+      });
+
+      it('matches snapshot', () => {
+        expect(oComponentFixture).toMatchSnapshot();
       });
     });
   });
