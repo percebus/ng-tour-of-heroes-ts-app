@@ -42,7 +42,7 @@ describe('HelloWorldComponent', () => {
       });
     });
 
-    describe('name: "David"', () => {
+    describe('?name="David"', () => {
       beforeEach(() => {
         const mockActivatedRoute = {
           snapshot: {
