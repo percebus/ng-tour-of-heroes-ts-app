@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`HelloWorldComponent rendering ?name="David" matches snapshot 1`] = `
+<app-hello-world
+  name={[Function String]}
+  route={[Function Object]}
+>
+  <div
+    class="hello-world"
+  >
+    <h1>
+      Hello David!
+    </h1>
+  </div>
+</app-hello-world>
+`;
+
 exports[`HelloWorldComponent rendering by default matches snapshot 1`] = `
 <app-hello-world
   name={[Function String]}
