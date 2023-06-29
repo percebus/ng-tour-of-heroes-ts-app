@@ -3,6 +3,7 @@
 exports[`HelloWorldComponent rendering by default matches snapshot 1`] = `
 <app-hello-world
   name={[Function String]}
+  route={[Function ActivatedRoute]}
 >
   <div
     class="hello-world"
@@ -17,6 +18,7 @@ exports[`HelloWorldComponent rendering by default matches snapshot 1`] = `
 exports[`HelloWorldComponent rendering name: "David" matches snapshot 1`] = `
 <app-hello-world
   name={[Function String]}
+  route={[Function Object]}
 >
   <div
     class="hello-world"

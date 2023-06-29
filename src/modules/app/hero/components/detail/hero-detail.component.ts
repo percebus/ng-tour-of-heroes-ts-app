@@ -14,8 +14,8 @@ export class HeroDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private heroService: HeroService,
-    private location: Location
+    private location: Location,
+    private heroService: HeroService
   ) {}
 
   refresh(): void {
