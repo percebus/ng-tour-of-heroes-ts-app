@@ -85,8 +85,8 @@ jobs:
       fail-fast: true
       matrix:
         target:
-          - base # XXX? overkill?
-          - project # XXX? overkill?
+          # - base # XXX? overkill?
+          # - project # XXX? overkill?
           - test
           - dist
           - http-server
