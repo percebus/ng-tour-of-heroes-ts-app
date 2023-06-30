@@ -97,7 +97,7 @@ describe('DashboardComponent', () => {
           const oHTMLElement = oComponentFixture.nativeElement //
             .querySelector('#search-component');
 
-          expect(oHTMLElement.textContent).toContain("Hero Search");
+          expect(oHTMLElement.textContent).toContain('Hero Search');
         });
       });
 
