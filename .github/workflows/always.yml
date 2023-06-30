@@ -85,12 +85,12 @@ jobs:
       fail-fast: true
       matrix:
         target:
-          - base
-          - project
+          # - base # XXX? overkill?
+          # - project # XXX? overkill?
           - test
           - dist
           - http-server
-    name: "target=${{ matrix.target }}"
+    name: "Dockerfile target:${{ matrix.target }}"
     steps:
       - uses: docker/build-push-action@v4
         name: docker build
