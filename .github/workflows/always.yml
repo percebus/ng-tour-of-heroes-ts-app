@@ -84,11 +84,11 @@ jobs:
       fail-fast: true
       matrix:
         target:
-          - "base"
-          - "project"
-          - "test"
-          - "dist"
-          - "http-server"
+          - base
+          - project
+          - test
+          - dist
+          - http-server
     name: "target=${{ matrix.target }}"
     steps:
       - name: docker
@@ -96,6 +96,16 @@ jobs:
         with:
           push: false
           target: ${{ matrix.target }}
+
+  docker-compose:
+    # if: github.ref == 'refs/heads/main' # TODO? or XXX?
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: isbang/compose-action@v1.4.1
+        with:
+          up-flags: "--build --remove-orphans"
 
   codeQL:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?
