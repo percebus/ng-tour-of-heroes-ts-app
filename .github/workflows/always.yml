@@ -4,6 +4,7 @@ on:
 
 env:
   NODE_VERSION: "18.x"
+  DOCKER_BUILDKIT: 1
 
 jobs:
   build:
