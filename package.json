@@ -23,6 +23,7 @@
     "style": "npm run prettier:write && npm run ng:lint:fix",
     "pretest": "npm run style",
     "test": "npm run jest:watch",
+    "pretest:ci": "npm run lint",
     "test:ci": "npm run jest:runInBand",
     "dist": "npm run ng:build",
     "browser:80": "open-cli http://localhost:80",
