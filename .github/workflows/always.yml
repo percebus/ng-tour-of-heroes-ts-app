@@ -99,7 +99,7 @@ jobs:
 
   docker-compose:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?
-    needs: build
+    needs: Dockerfile
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
