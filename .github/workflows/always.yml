@@ -85,11 +85,11 @@ jobs:
       fail-fast: true
       matrix:
         target:
-          # - base # XXX? overkill?
-          # - project # XXX? overkill?
+          # - base # always gets invoked
+          # - project # always gets invoked
           - test
-          - dist
-          - http-server
+          # - dist # gets invoked in http-server
+          # - http-server # gets invoked in docker-compose
     name: "Dockerfile target:${{ matrix.target }}"
     steps:
       - uses: docker/build-push-action@v4
