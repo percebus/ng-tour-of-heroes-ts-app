@@ -43,7 +43,7 @@ jobs:
           path: dist
 
   builds:
-    # if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     needs: build
     strategy:
       max-parallel: 6
@@ -52,7 +52,7 @@ jobs:
         os:
           - ubuntu-latest
           - macOS-latest
-          - windows-latest
+#         - windows-latest # TODO? too slow
     runs-on: ${{ matrix.os }}
     name: Build @ node:${{ matrix.node }}@${{ matrix.os }}
     steps:
@@ -86,7 +86,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["javascript"]
+        language: ["javascript", "typescript"]
 
     name: "CodeQL: ${{ matrix.language }}"
     steps:
@@ -96,11 +96,11 @@ jobs:
         uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
-      - name: build.zip
+      - name: dist.zip
         uses: actions/download-artifact@v3
         with:
-          name: build
-          path: build
+          name: dist
+          path: dist
 
       - name: CodeQL
         uses: github/codeql-action/analyze@v2
