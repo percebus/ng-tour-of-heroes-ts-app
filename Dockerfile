@@ -10,7 +10,7 @@ RUN npm ci
 FROM project as test
 RUN npm run test:ci
 
-FROM test as dist
+FROM project as dist
 RUN npm run dist
 RUN ls ./dist -la
 

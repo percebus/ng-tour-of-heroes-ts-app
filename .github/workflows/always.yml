@@ -77,6 +77,7 @@ jobs:
         run: npm run dist
 
   Dockerfile:
+    # if: github.ref == 'refs/heads/main' # TODO? or XXX?
     needs: build
     runs-on: ubuntu-latest
     strategy:
@@ -84,9 +85,11 @@ jobs:
       matrix:
         target:
           - "base"
+          - "project"
           - "test"
           - "dist"
           - "http-server"
+    name: "target=${{ matrix.target }}"
     steps:
       - name: docker
         uses: docker/build-push-action@v4
