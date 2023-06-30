@@ -92,8 +92,8 @@ jobs:
           - http-server
     name: "target=${{ matrix.target }}"
     steps:
-      - name: docker
-        uses: docker/build-push-action@v4
+      - uses: docker/build-push-action@v4
+        name: docker build
         with:
           push: false
           target: ${{ matrix.target }}
@@ -105,6 +105,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: isbang/compose-action@v1.4.1
+        name: "docker compose up"
         with:
           up-flags: "--build --remove-orphans"
 
