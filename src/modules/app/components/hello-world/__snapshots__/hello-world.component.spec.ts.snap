@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`HelloWorldComponent rendering ?name="David" matches snapshot 1`] = `
+exports[`HelloWorldComponent ?name="David" rendering matches snapshot 1`] = `
 <app-hello-world
   name={[Function String]}
   route={[Function Object]}
@@ -15,7 +15,7 @@ exports[`HelloWorldComponent rendering ?name="David" matches snapshot 1`] = `
 </app-hello-world>
 `;
 
-exports[`HelloWorldComponent rendering by default matches snapshot 1`] = `
+exports[`HelloWorldComponent by default rendering matches snapshot 1`] = `
 <app-hello-world
   name={[Function String]}
   route={[Function ActivatedRoute]}
@@ -25,21 +25,6 @@ exports[`HelloWorldComponent rendering by default matches snapshot 1`] = `
   >
     <h1>
       Hello World!
-    </h1>
-  </div>
-</app-hello-world>
-`;
-
-exports[`HelloWorldComponent rendering name: "David" matches snapshot 1`] = `
-<app-hello-world
-  name={[Function String]}
-  route={[Function Object]}
->
-  <div
-    class="hello-world"
-  >
-    <h1>
-      Hello David!
     </h1>
   </div>
 </app-hello-world>

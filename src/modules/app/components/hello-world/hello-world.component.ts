@@ -8,13 +8,15 @@ import { Tentative } from '../../types/nothing';
   styleUrls: ['./hello-world.component.scss'],
 })
 export class HelloWorldComponent implements OnInit {
-  name: Tentative<string>;
+  name: Tentative<string> = 'World';
 
   constructor(private route: ActivatedRoute) {}
 
   refresh() {
-    const name = this.route.snapshot.paramMap.get('name') ?? 'World';
-    this.name = name;
+    const name = this.route.snapshot.queryParamMap.get('name');
+    if (name) {
+      this.name = name;
+    }
   }
 
   ngOnInit(): void {
