@@ -52,7 +52,7 @@ jobs:
         os:
           - ubuntu-latest
           - macOS-latest
-#         - windows-latest # TODO? too slow
+          # - windows-latest # TODO? too slow
     runs-on: ${{ matrix.os }}
     name: Build @ node:${{ matrix.node }}@${{ matrix.os }}
     steps:
