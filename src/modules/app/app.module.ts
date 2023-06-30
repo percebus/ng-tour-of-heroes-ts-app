@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from 'src/modules/routing/app-routing.module';
 import { RootComponent } from './components/root/root.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './hero/components/dashboard/dashboard.component';
 import { HeroesComponent } from './hero/components/heroes/heroes.component';
 import { HeroDetailComponent } from './hero/components/detail/hero-detail.component';
 import { HeroSearchComponent } from './hero/components/search/hero-search.component';
