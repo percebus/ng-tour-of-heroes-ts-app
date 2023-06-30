@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DashboardComponent using MockHeroService rendering matches snapshot 1`] = `
+<app-dashboard
+  heroService={[Function MockHeroService]}
+  heroes={[Function Array]}
+  refresh={[Function Function]}
+>
+  <div
+    class="heroes-dashboard"
+  >
+    <h2>
+      Top Heroes
+    </h2>
+    <div
+      class="heroes-menu"
+    >
+      <a>
+         Bombasto 
+      </a>
+      <a>
+         Celeritas 
+      </a>
+      <a>
+         Magneta 
+      </a>
+      <a>
+         RubberMan 
+      </a>
+    </div>
+    <app-hero-search>
+      <div
+        id="search-component"
+      >
+        <label
+          for="search-box"
+        >
+          Hero Search
+        </label>
+        <input
+          id="search-box"
+        />
+        <ul
+          class="search-result"
+        >
+        </ul>
+      </div>
+    </app-hero-search>
+  </div>
+</app-dashboard>
+`;
