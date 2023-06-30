@@ -71,10 +71,28 @@ jobs:
         run: npm ci
 
       - name: npm test:ci
-        run: npm run test:ci
+        run: npm run test:ci --ignore-scripts
 
       - name: ng build
         run: npm run dist
+
+  Dockerfile:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        target:
+          - "base"
+          - "test"
+          - "dist"
+          - "http-server"
+    steps:
+      - name: docker
+        uses: docker/build-push-action@v4
+        with:
+          push: false
+          target: ${{ matrix.target }}
 
   codeQL:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?
