@@ -36,8 +36,8 @@ jobs:
 
       - name: ng build
         run: |
-          - npm run dist
-          - ls -la dist
+          npm run dist
+          ls -la dist
       - name: dist.zip
         uses: actions/upload-artifact@v3
         with:
@@ -77,7 +77,7 @@ jobs:
         run: npm run dist
 
   codeQL:
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main' # TODO? or XXX?
     needs: build
     runs-on: ubuntu-latest
     permissions:
