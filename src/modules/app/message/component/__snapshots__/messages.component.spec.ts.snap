@@ -30,8 +30,14 @@ exports[`MessagesComponent with 1 message HTML matches snapshot 1`] = `
     >
       Clear messages
     </button>
-    <div>
-       Message #1 
+    <div
+      class="messages"
+    >
+      <div
+        class="message"
+      >
+         Message #1 
+      </div>
     </div>
   </div>
 </app-messages>

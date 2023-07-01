@@ -6,6 +6,7 @@ describe('MessagesComponent', () => {
   let oMessageComponent: MessagesComponent;
   let oMessageService: MessageService;
   let oComponentFixture: ComponentFixture<MessagesComponent>;
+  let oHTMLElement: HTMLElement;
 
   describe('w/o messages', () => {
     beforeEach(() => {
@@ -62,9 +63,9 @@ describe('MessagesComponent', () => {
     describe('MessageService', () => {
       describe('.messages[]', () => {
         it('contains "Message #1"', () => {
-          expect(oMessageComponent.messageService.messages).toEqual(
-            ['Message #1']
-          );
+          expect(oMessageComponent.messageService.messages).toEqual([
+            'Message #1',
+          ]);
         });
       });
     });
@@ -72,13 +73,15 @@ describe('MessagesComponent', () => {
     describe('HTML', () => {
       describe('<app-messages>', () => {
         it('is NOT empty', () => {
-          expect(oComponentFixture.nativeElement.children.length).toBeGreaterThan(0);
+          expect(
+            oComponentFixture.nativeElement.children.length
+          ).toBeGreaterThan(0);
         });
       });
 
       describe('heading', () => {
         it('renders "Messages"', () => {
-          const oHTMLElement = oComponentFixture.nativeElement.querySelector(
+          oHTMLElement = oComponentFixture.nativeElement.querySelector(
             '.messages-component h2'
           );
 
@@ -86,9 +89,25 @@ describe('MessagesComponent', () => {
         });
       });
 
+      describe('messages', () => {
+        beforeEach(() => {
+          oHTMLElement = oComponentFixture.nativeElement.querySelector(
+            '.messages-component .messages'
+          );
+        });
+
+        it('has 1 item', () => {
+          expect(oHTMLElement.children.length).toBe(1);
+        });
+
+        it('contains "Message #1"', () => {
+          expect(oHTMLElement.textContent).toContain('Message #1');
+        });
+      });
+
       describe('"Clear messages" button', () => {
         it('gets rendered', () => {
-          const oHTMLElement = oComponentFixture.nativeElement.querySelector(
+          oHTMLElement = oComponentFixture.nativeElement.querySelector(
             '.messages-component button'
           );
 
