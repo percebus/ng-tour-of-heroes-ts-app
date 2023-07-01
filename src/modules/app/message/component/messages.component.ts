@@ -8,4 +8,8 @@ import { MessageService } from '../../message/service/message.service';
 })
 export class MessagesComponent {
   constructor(public messageService: MessageService) {}
+
+  clear(): void {
+    this.messageService.clear();
+  }
 }

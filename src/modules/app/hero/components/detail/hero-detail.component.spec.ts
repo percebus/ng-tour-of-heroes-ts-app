@@ -59,7 +59,7 @@ describe('HeroDetailComponent', () => {
 
   // FIXME
   // Mock route & service
-  xdescribe('rendering', () => {
+  xdescribe('HTML', () => {
     let renderedHTML: HTMLElement;
 
     describe('hero.id 42', () => {
