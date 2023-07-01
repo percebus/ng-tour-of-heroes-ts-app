@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessagesComponent w/o messages HTML matches snapshot 1`] = `
+<app-messages
+  messageService={[Function MessageService]}
+>
+</app-messages>
+`;
+
+exports[`MessagesComponent with 1 message .clear() HTML matches snapshot 1`] = `
+<app-messages
+  messageService={[Function MessageService]}
+>
+</app-messages>
+`;
+
+exports[`MessagesComponent with 1 message HTML matches snapshot 1`] = `
+<app-messages
+  messageService={[Function MessageService]}
+>
+  <div
+    class="messages-component"
+  >
+    <h2>
+      Messages
+    </h2>
+    <button
+      class="clear"
+      type="button"
+    >
+      Clear messages
+    </button>
+    <div
+      class="messages"
+    >
+      <div
+        class="message"
+      >
+         Message #1 
+      </div>
+    </div>
+  </div>
+</app-messages>
+`;

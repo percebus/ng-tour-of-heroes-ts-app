@@ -54,7 +54,7 @@ describe('DashboardComponent', () => {
       });
     });
 
-    describe('rendering', () => {
+    describe('HTML', () => {
       describe('heading', () => {
         it('renders "Top Heroes"', () => {
           const oHTMLElement = oComponentFixture.nativeElement //

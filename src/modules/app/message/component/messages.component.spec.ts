@@ -1,20 +1,146 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MessagesComponent } from './messages.component';
+import { MessageService } from '../service/message.service';
 
 describe('MessagesComponent', () => {
-  let component: MessagesComponent;
-  let fixture: ComponentFixture<MessagesComponent>;
+  let oMessageComponent: MessagesComponent;
+  let oMessageService: MessageService;
+  let oComponentFixture: ComponentFixture<MessagesComponent>;
+  let oHTMLElement: HTMLElement;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [MessagesComponent],
+  describe('w/o messages', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        declarations: [MessagesComponent],
+      });
+
+      oMessageService = TestBed.inject(MessageService);
+
+      oComponentFixture = TestBed.createComponent(MessagesComponent);
+      oMessageComponent = oComponentFixture.componentInstance;
+
+      oComponentFixture.detectChanges();
     });
-    fixture = TestBed.createComponent(MessagesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+
+    it('is instanceof MessageComponent', () => {
+      expect(oMessageComponent).toBeInstanceOf(MessagesComponent);
+    });
+
+    describe('messages', () => {
+      it('is an empty array', () => {
+        expect(oMessageComponent.messageService.messages).toEqual([]);
+      });
+    });
+
+    describe('HTML', () => {
+      describe('<app-messages>', () => {
+        it('is empty', () => {
+          expect(oComponentFixture.nativeElement.children.length).toBe(0);
+        });
+      });
+
+      it('matches snapshot', () => {
+        expect(oComponentFixture).toMatchSnapshot();
+      });
+    });
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('with 1 message', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        declarations: [MessagesComponent],
+      });
+
+      oMessageService = TestBed.inject(MessageService);
+
+      oComponentFixture = TestBed.createComponent(MessagesComponent);
+      oMessageComponent = oComponentFixture.componentInstance;
+
+      oMessageService.add('Message #1');
+      oComponentFixture.detectChanges();
+    });
+
+    describe('MessageService', () => {
+      describe('.messages[]', () => {
+        it('contains "Message #1"', () => {
+          expect(oMessageComponent.messageService.messages).toEqual([
+            'Message #1',
+          ]);
+        });
+      });
+    });
+
+    describe('HTML', () => {
+      describe('<app-messages>', () => {
+        it('is NOT empty', () => {
+          expect(
+            oComponentFixture.nativeElement.children.length
+          ).toBeGreaterThan(0);
+        });
+      });
+
+      describe('heading', () => {
+        it('renders "Messages"', () => {
+          oHTMLElement = oComponentFixture.nativeElement.querySelector(
+            '.messages-component h2'
+          );
+
+          expect(oHTMLElement.textContent).toEqual('Messages');
+        });
+      });
+
+      describe('messages', () => {
+        beforeEach(() => {
+          oHTMLElement = oComponentFixture.nativeElement.querySelector(
+            '.messages-component .messages'
+          );
+        });
+
+        it('has 1 item', () => {
+          expect(oHTMLElement.children.length).toBe(1);
+        });
+
+        it('contains "Message #1"', () => {
+          expect(oHTMLElement.textContent).toContain('Message #1');
+        });
+      });
+
+      describe('"Clear messages" button', () => {
+        it('gets rendered', () => {
+          oHTMLElement = oComponentFixture.nativeElement.querySelector(
+            '.messages-component button'
+          );
+
+          expect(oHTMLElement.textContent).toEqual('Clear messages');
+        });
+      });
+
+      it('matches snapshot', () => {
+        expect(oComponentFixture).toMatchSnapshot();
+      });
+    });
+
+    describe('.clear()', () => {
+      beforeEach(() => {
+        oMessageComponent.clear();
+        oComponentFixture.detectChanges();
+      });
+
+      it('removes all messages', () => {
+        expect(oMessageComponent.messageService.messages).toEqual([]);
+      });
+
+      describe('HTML', () => {
+        describe('<app-messages>', () => {
+          it('is empty', () => {
+            expect(oComponentFixture.nativeElement.children.length).toBe(0);
+          });
+        });
+
+        it('matches snapshot', () => {
+          expect(oComponentFixture).toMatchSnapshot();
+        });
+      });
+    });
   });
 });
