@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeroSearchComponent using MockHeroService HTML matches snapshot 1`] = `
+<app-hero-search
+  heroService={[Function MockHeroService]}
+  heroes$={[Function AnonymousSubject]}
+  refresh={[Function Function]}
+  searchTerms={[Function Subject]}
+>
+  <div
+    id="search-component"
+  >
+    <label
+      for="search-box"
+    >
+      Hero Search
+    </label>
+    <input
+      id="search-box"
+    />
+    <ul
+      class="search-result"
+    >
+    </ul>
+  </div>
+</app-hero-search>
+`;

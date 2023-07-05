@@ -5,28 +5,62 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { HeroSearchComponent } from './hero-search.component';
+import { HeroAPI } from '../../types/hero-api';
+import { HeroService } from '../../service/hero.service';
+import { MockHeroService } from '../../../hero-mock/services/mock/hero.mock-service';
 
 describe('HeroSearchComponent', () => {
-  let component: HeroSearchComponent;
-  let fixture: ComponentFixture<HeroSearchComponent>;
-  let httpClient: HttpClient;
-  let httpTestingController: HttpTestingController;
+  let oHeroSearchComponent: HeroSearchComponent;
+  let oComponentFixture: ComponentFixture<HeroSearchComponent>;
+  let mockHeroService: HeroAPI;
+  let refresh: jest.SpyInstance;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [HeroSearchComponent],
+  describe('using MockHeroService', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule],
+        declarations: [HeroSearchComponent],
+      })
+        .overrideComponent(HeroSearchComponent, {
+          set: {
+            providers: [{ provide: HeroService, useClass: MockHeroService }],
+          },
+        })
+        .compileComponents();
+
+      oComponentFixture = TestBed.createComponent(HeroSearchComponent);
+      mockHeroService =
+        oComponentFixture.debugElement.injector.get(HeroService);
+
+      oHeroSearchComponent = oComponentFixture.componentInstance;
+      refresh = jest.spyOn(oHeroSearchComponent, 'refresh');
+
+      oComponentFixture.detectChanges();
     });
 
-    httpClient = TestBed.inject(HttpClient);
-    httpTestingController = TestBed.inject(HttpTestingController);
+    it('is instanceof HeroSearchComponent', () => {
+      expect(oHeroSearchComponent).toBeInstanceOf(HeroSearchComponent);
+    });
 
-    fixture = TestBed.createComponent(HeroSearchComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    describe('.refresh()', () => {
+      it('got invoked OnInit', () => {
+        expect(refresh).toHaveBeenCalled();
+      });
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    describe('HTML', () => {
+      describe('search input text box', () => {
+        it('renders "Hero Search"', () => {
+          const oHTMLElement = oComponentFixture.nativeElement //
+            .querySelector('#search-component');
+
+          expect(oHTMLElement.textContent).toBe('Hero Search');
+        });
+      });
+
+      it('matches snapshot', () => {
+        expect(oComponentFixture).toMatchSnapshot();
+      });
+    });
   });
 });
