@@ -13,9 +13,71 @@ describe('HeroSearchComponent', () => {
   let oHeroSearchComponent: HeroSearchComponent;
   let oComponentFixture: ComponentFixture<HeroSearchComponent>;
   let mockHeroService: HeroAPI;
+  let searchInput: HTMLInputElement;
   let refresh: jest.SpyInstance;
+  let search: jest.SpyInstance;
 
   describe('using MockHeroService', () => {
+    describe('search=""', () => {
+      beforeEach(() => {
+        TestBed.configureTestingModule({
+          imports: [HttpClientTestingModule],
+          declarations: [HeroSearchComponent],
+        })
+          .overrideComponent(HeroSearchComponent, {
+            set: {
+              providers: [{ provide: HeroService, useClass: MockHeroService }],
+            },
+          })
+          .compileComponents();
+
+        oComponentFixture = TestBed.createComponent(HeroSearchComponent);
+        mockHeroService =
+          oComponentFixture.debugElement.injector.get(HeroService);
+
+        oHeroSearchComponent = oComponentFixture.componentInstance;
+        refresh = jest.spyOn(oHeroSearchComponent, 'refresh');
+
+        oComponentFixture.detectChanges();
+      });
+
+      it('is instanceof HeroSearchComponent', () => {
+        expect(oHeroSearchComponent).toBeInstanceOf(HeroSearchComponent);
+      });
+
+      describe('Dependency Injection', () => {
+        describe('HeroService', () => {
+          it('is instanceof MockHeroService', () => {
+            expect(mockHeroService).not.toBeInstanceOf(HeroService);
+            expect(mockHeroService).toBeInstanceOf(MockHeroService);
+          });
+        });
+      });
+
+      describe('.refresh()', () => {
+        it('got invoked OnInit', () => {
+          expect(refresh).toHaveBeenCalled();
+        });
+      });
+
+      describe('HTML', () => {
+        describe('search input text box', () => {
+          it('renders "Hero Search"', () => {
+            const oHTMLElement = oComponentFixture.nativeElement //
+              .querySelector('#search-component');
+
+            expect(oHTMLElement.textContent).toContain('Hero Search');
+          });
+        });
+
+        it('matches snapshot', () => {
+          expect(oComponentFixture).toMatchSnapshot();
+        });
+      });
+    });
+  });
+
+  describe('search="Celer"', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule],
@@ -29,32 +91,36 @@ describe('HeroSearchComponent', () => {
         .compileComponents();
 
       oComponentFixture = TestBed.createComponent(HeroSearchComponent);
-      mockHeroService =
-        oComponentFixture.debugElement.injector.get(HeroService);
+      mockHeroService = oComponentFixture //
+        .debugElement //
+        .injector //
+        .get(HeroService);
 
       oHeroSearchComponent = oComponentFixture.componentInstance;
-      refresh = jest.spyOn(oHeroSearchComponent, 'refresh');
+      search = jest.spyOn(oHeroSearchComponent, 'search');
+
+      searchInput = oComponentFixture.nativeElement.querySelector('input#search-box');
+      searchInput.value = 'Celer';
+      searchInput.dispatchEvent(new Event('input'));
 
       oComponentFixture.detectChanges();
     });
 
-    it('is instanceof HeroSearchComponent', () => {
-      expect(oHeroSearchComponent).toBeInstanceOf(HeroSearchComponent);
-    });
-
-    describe('.refresh()', () => {
-      it('got invoked OnInit', () => {
-        expect(refresh).toHaveBeenCalled();
-      });
+    describe('search(text)', () => {
+      it('gets invoked', () => {
+        expect(search).toHaveBeenCalledWith('Celer');
+      })
     });
 
     describe('HTML', () => {
-      describe('search input text box', () => {
-        it('renders "Hero Search"', () => {
-          const oHTMLElement = oComponentFixture.nativeElement //
-            .querySelector('#search-component');
+      describe('.search-result', () => {
+        it('contains "Celeritas"', () => {
+          oComponentFixture.whenStable().then(() => {
+            const oHTMLElement = oComponentFixture.nativeElement //
+              .querySelector('.search-result');
 
-          expect(oHTMLElement.textContent).toBe('Hero Search');
+            expect(oHTMLElement.textContent).toContain('Celeritas');
+          });
         });
       });
 
