@@ -91,15 +91,14 @@ describe('HeroSearchComponent', () => {
         .compileComponents();
 
       oComponentFixture = TestBed.createComponent(HeroSearchComponent);
-      mockHeroService = oComponentFixture //
-        .debugElement //
-        .injector //
-        .get(HeroService);
+      mockHeroService =
+        oComponentFixture.debugElement.injector.get(HeroService);
 
       oHeroSearchComponent = oComponentFixture.componentInstance;
       search = jest.spyOn(oHeroSearchComponent, 'search');
 
-      searchInput = oComponentFixture.nativeElement.querySelector('input#search-box');
+      searchInput =
+        oComponentFixture.nativeElement.querySelector('input#search-box');
       searchInput.value = 'Celer';
       searchInput.dispatchEvent(new Event('input'));
 
@@ -109,7 +108,7 @@ describe('HeroSearchComponent', () => {
     describe('search(text)', () => {
       it('gets invoked', () => {
         expect(search).toHaveBeenCalledWith('Celer');
-      })
+      });
     });
 
     describe('HTML', () => {
