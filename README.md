@@ -28,4 +28,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Resources
 
+- [Install Jest for Angular](https://medium.com/@redin.gaetan/jest-and-angular-cb70ad78ee3d)
 - [How To Read a JSON File From Assets in Angular](https://betterprogramming.pub/how-to-read-a-json-file-from-assets-in-angular-7c8313cd4fb1)
