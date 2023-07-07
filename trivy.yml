@@ -1,0 +1,8 @@
+# SRC: https://aquasecurity.github.io/trivy/v0.33/docs/references/customization/config-file/#global-options
+
+# debug: true
+format: table
+exit-code: 1
+list-all-pkgs: true
+ignore-unfixed: true
+dependency-tree: true

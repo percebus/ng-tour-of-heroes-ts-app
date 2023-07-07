@@ -109,6 +109,52 @@ jobs:
         with:
           up-flags: "--build --remove-orphans"
 
+  trivy_Dockerfile:
+    # if: github.ref == 'refs/heads/main' # TODO? or XXX?
+    name: trivy:Dockerfile
+    needs: Dockerfile
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: ls
+        run: ls -la
+      - name: docker build
+        run: docker build -t ${{ github.event.repository.name }}:${{ github.sha }} .
+      - name: trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "${{ github.event.repository.name }}:${{ github.sha }}"
+          severity: "CRITICAL,HIGH"
+          format: "sarif"
+          output: "trivy-Dockerfile.sarif"
+      - name: "Upload .sarif file"
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: "trivy-Dockerfile.sarif"
+
+  trivy_repo:
+    # if: github.ref == 'refs/heads/main' # TODO? or XXX?
+    needs: build
+    name: trivy:repo
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: trivy:repo
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: repo
+          ignore-unfixed: true
+          format: sarif
+          output: trivy-repo.sarif
+          severity: CRITICAL
+      - name: Upload .sarif file
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: trivy-results.sarif
+
   codeQL:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?
     needs: build
