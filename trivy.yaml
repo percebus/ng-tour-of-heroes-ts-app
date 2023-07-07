@@ -3,8 +3,8 @@
 debug: true
 format: table
 ignorefile: .trivyignore
-scanners: vuln,secret,config
 exit-code: 1
+scanners: vuln,secret,config # FIXME: its getting ignored
 hide-progress: false
 ignore-unfixed: true
 dependency-tree: true

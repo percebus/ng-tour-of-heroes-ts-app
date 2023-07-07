@@ -6,6 +6,7 @@ env:
   NODE_VERSION: "18.x"
   DOCKER_BUILDKIT: 1
   TRIVY_IMAGE_REF: ${{ github.event.repository.name }}:${{ github.sha }}
+  TRIVY_SCANNERS: vuln,secret,config
 
 jobs:
   build:
@@ -130,6 +131,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: image
+          scanners: ${{ env.TRIVY_SCANNERS }}
           image-ref: ${{ env.TRIVY_IMAGE_REF }}
           trivy-config: trivy-sarif-image.yaml
           limit-severities-for-sarif: true
@@ -157,6 +159,7 @@ jobs:
         with:
           scan-type: fs
           scan-ref: .
+          scanners: ${{ env.TRIVY_SCANNERS }}
           trivy-config: trivy-sarif-fs.yaml
           limit-severities-for-sarif: true
 

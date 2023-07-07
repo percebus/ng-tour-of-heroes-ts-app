@@ -4,7 +4,7 @@ debug: true
 scan-type: fs
 ignorefile: .trivyignore
 ignore-unfixed: true
-scanners: vuln,secret,config
+scanners: vuln,secret,config # FIXME: its getting ignored
 severity: CRITICAL,HIGH
 format: sarif
 output: trivy-fs.sarif
