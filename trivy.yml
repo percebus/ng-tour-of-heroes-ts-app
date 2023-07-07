@@ -2,6 +2,8 @@
 
 # debug: true
 format: table
+ignorefile: .trivyignore
+security-checks: vuln,secret,config
 exit-code: 1
 hide-progress: false
 list-all-pkgs: true

@@ -1,7 +1,7 @@
 scan-type: fs
-trivyignores: .trivyignore
+ignorefile: .trivyignore
 ignore-unfixed: true
-scanners: vuln,secret,config
+security-checks: vuln,secret,config
 severity: CRITICAL,HIGH
 format: sarif
 output: trivy-fs.sarif
