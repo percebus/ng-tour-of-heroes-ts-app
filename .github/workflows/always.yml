@@ -3,7 +3,7 @@ on:
   push:
 
 env:
-  NODE_VERSION: "18.x"
+  NODE_VERSION: 18.x
   DOCKER_BUILDKIT: 1
   TRIVY_IMAGE_REF: ${{ github.event.repository.name }}:${{ github.sha }}
   TRIVY_SCANNERS: vuln,secret,config
@@ -92,7 +92,7 @@ jobs:
           - test
           # - dist # gets invoked in http-server
           # - http-server # gets invoked in docker-compose
-    name: "Dockerfile target:${{ matrix.target }}"
+    name: Dockerfile target:${{ matrix.target }}
     steps:
       - uses: docker/build-push-action@v4
         name: docker build
@@ -107,14 +107,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: isbang/compose-action@v1.4.1
-        name: "docker compose"
+        name: docker compose
         with:
-          up-flags: "--build --remove-orphans"
+          up-flags: --build --remove-orphans
 
   trivy_image:
-    # if: github.ref == 'refs/heads/main' # TODO
-    name: trivy:Dockerfile
-    needs: Dockerfile
+    if: github.ref == 'refs/heads/main'
+    name: "trivy: Dockerfile"
+    needs: docker-compose
     runs-on: ubuntu-latest
     permissions:
       actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
@@ -127,7 +127,7 @@ jobs:
         run: ls -la
       - name: docker build
         run: docker build . -t ${{ env.TRIVY_IMAGE_REF }}
-      - name: trivy
+      - name: trivy image
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: image
@@ -136,7 +136,7 @@ jobs:
           trivy-config: trivy-sarif-image.yaml
           limit-severities-for-sarif: true
 
-      - name: "Upload .sarif file"
+      - name: Upload .sarif file
         uses: github/codeql-action/upload-sarif@v2
         if: always()
         with:
@@ -144,7 +144,7 @@ jobs:
 
   trivy_fs:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?
-    name: trivy:fs
+    name: "trivy: fs"
     needs: build
     runs-on: ubuntu-latest
     permissions:
@@ -154,7 +154,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: trivy:fs
+      - name: trivy fs
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: fs
