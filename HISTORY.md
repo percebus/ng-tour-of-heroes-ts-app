@@ -9,3 +9,4 @@
 1. [Add navigation](https://angular.io/tutorial/tour-of-heroes/toh-pt5)
 1. [Get data from a server](https://angular.io/tutorial/toh-pt6)
 1. [Migrated project from `karma` to `jest`](https://medium.com/@redin.gaetan/jest-and-angular-cb70ad78ee3d)
+1. Added `ng e2e`, copied from [Server-side rendering](https://angular.io/guide/universal#why-do-it)

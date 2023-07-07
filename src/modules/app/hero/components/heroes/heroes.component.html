@@ -1,7 +1,9 @@
 <h2>My Heroes</h2>
 <div>
-  <label for="new-hero">Hero name: </label>
-  <input id="new-hero" #heroName />
+  <label>
+    Hero name:
+    <input id="new-hero" #heroName />
+  </label>
 
   <!-- (click) passes input value to add() and then clears the input -->
   <button
@@ -9,7 +11,7 @@
     class="add-button"
     (click)="add(heroName.value); heroName.value = ''"
   >
-    Add hero
+    add
   </button>
 </div>
 

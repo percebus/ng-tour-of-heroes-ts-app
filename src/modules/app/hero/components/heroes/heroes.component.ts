@@ -39,7 +39,7 @@ export class HeroesComponent implements OnInit {
 
     this.heroService
       .post({ name } as Hero) //
-      .subscribe(this.heroes.push);
+      .subscribe((oHero: Hero) => this.heroes.push(oHero));
   }
 
   delete(hero: Hero): void {
