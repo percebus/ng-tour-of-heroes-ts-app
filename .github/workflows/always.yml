@@ -134,7 +134,7 @@ jobs:
           exit-code: 1
           # format: sarif
           format: template
-          template: '@/contrib/sarif.tpl'
+          template: "@/contrib/sarif.tpl"
           output: trivy-Dockerfile.sarif
 
       - name: "Upload .sarif file"
@@ -157,12 +157,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-  # FIXME:
-  # "FATAL	repository scan error:"
-  # "scan error: unable to initialize a scanner"
-  # "unable to initialize a repository scanner"
-  # "git clone error: Get "https://./info/refs?service=git-upload-pack""
-  # "dial tcp: lookup . on X.X.X.X: no such host"
+      # FIXME:
+      # "FATAL	repository scan error:"
+      # "scan error: unable to initialize a scanner"
+      # "unable to initialize a repository scanner"
+      # "git clone error: Get "https://./info/refs?service=git-upload-pack""
+      # "dial tcp: lookup . on X.X.X.X: no such host"
       - name: trivy:repo
         uses: aquasecurity/trivy-action@master
         with:
