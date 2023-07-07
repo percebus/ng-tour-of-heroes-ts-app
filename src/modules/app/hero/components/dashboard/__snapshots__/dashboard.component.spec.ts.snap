@@ -9,23 +9,55 @@ exports[`DashboardComponent using MockHeroService HTML matches snapshot 1`] = `
   <div
     class="heroes-dashboard"
   >
-    <h2>
+    <h3>
       Top Heroes
-    </h2>
+    </h3>
     <div
-      class="heroes-menu"
+      class="heroes-menu grid grid-pad"
     >
-      <a>
-         Bombasto 
+      <a
+        class="col-1-4"
+      >
+        <div
+          class="module hero"
+        >
+          <h4>
+            Bombasto
+          </h4>
+        </div>
       </a>
-      <a>
-         Celeritas 
+      <a
+        class="col-1-4"
+      >
+        <div
+          class="module hero"
+        >
+          <h4>
+            Celeritas
+          </h4>
+        </div>
       </a>
-      <a>
-         Magneta 
+      <a
+        class="col-1-4"
+      >
+        <div
+          class="module hero"
+        >
+          <h4>
+            Magneta
+          </h4>
+        </div>
       </a>
-      <a>
-         RubberMan 
+      <a
+        class="col-1-4"
+      >
+        <div
+          class="module hero"
+        >
+          <h4>
+            RubberMan
+          </h4>
+        </div>
       </a>
     </div>
     <app-hero-search>
