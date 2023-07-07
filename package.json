@@ -23,6 +23,7 @@
     "style": "npm run prettier:write && npm run ng:lint:fix",
     "pretest": "npm run style",
     "test": "npm run jest:watch",
+    "test:e2e": "npm run ng:e2e",
     "pretest:ci": "npm run lint",
     "test:ci": "npm run jest:runInBand",
     "dist": "npm run ng:build",
@@ -38,10 +39,7 @@
     "trivy:ci:fs": "npm run trivy:fs -- --config trivy-sarif-fs.yaml",
     "trivy:ci:image": "npm run trivy -- image ng-tour-of-heroes-ts-app:latest --config trivy-sarif-image.yaml",
     "prestart": "npm run browser:80",
-    "start": "npm run docker:compose:up",
-    "e2e": "ng e2e",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "start": "npm run docker:compose:up"
   },
   "private": true,
   "dependencies": {
