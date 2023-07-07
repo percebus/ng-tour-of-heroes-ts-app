@@ -110,7 +110,7 @@ jobs:
           up-flags: "--build --remove-orphans"
 
   trivy_Dockerfile:
-    # if: github.ref == 'refs/heads/main' # TODO? or XXX?
+    # if: github.ref == 'refs/heads/main' # TODO
     name: trivy:Dockerfile
     needs: Dockerfile
     runs-on: ubuntu-latest
@@ -131,10 +131,7 @@ jobs:
           scan-type: image
           image-ref: "${{ github.event.repository.name }}:${{ github.sha }}"
           severity: CRITICAL,HIGH
-          exit-code: 1
-          # format: sarif
-          format: template
-          template: "@/contrib/sarif.tpl"
+          format: sarif
           output: trivy-Dockerfile.sarif
 
       - name: "Upload .sarif file"
@@ -143,11 +140,10 @@ jobs:
         with:
           sarif_file: "trivy-Dockerfile.sarif"
 
-  # FIXME
-  trivy_repo:
+  trivy_fs:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?
     needs: verify
-    name: trivy:repo
+    name: trivy:fs
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -156,26 +152,53 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      # FIXME:
-      # "FATAL	repository scan error:"
-      # "scan error: unable to initialize a scanner"
-      # "unable to initialize a repository scanner"
-      # "git clone error: Get "https://./info/refs?service=git-upload-pack""
-      # "dial tcp: lookup . on X.X.X.X: no such host"
-      - name: trivy:repo
+      - name: trivy:fs
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: repo
+          scan-type: fs
           scan-ref: .
           ignore-unfixed: true
           format: sarif
-          output: trivy-repo.sarif
+          output: trivy-fs.sarif
           severity: CRITICAL
       - name: Upload .sarif file
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: trivy-results.sarif
+          sarif_file: trivy-fs.sarif
+
+  # FIXME
+  # trivy_repo:
+  #   # if: github.ref == 'refs/heads/main' # TODO? or XXX?
+  #   needs: verify
+  #   name: trivy:repo
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     actions: read
+  #     contents: read
+  #     security-events: write
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+
+  #     # FIXME:
+  #     # "FATAL	repository scan error:"
+  #     # "scan error: unable to initialize a scanner"
+  #     # "unable to initialize a repository scanner"
+  #     # "git clone error: Get "https://./info/refs?service=git-upload-pack""
+  #     # "dial tcp: lookup . on X.X.X.X: no such host"
+  #     - name: trivy:repo
+  #       uses: aquasecurity/trivy-action@master
+  #       with:
+  #         scan-type: repo
+  #         scan-ref: .
+  #         ignore-unfixed: true
+  #         format: sarif
+  #         output: trivy-repo.sarif
+  #         severity: CRITICAL
+  #     - name: Upload .sarif file
+  #       uses: github/codeql-action/upload-sarif@v2
+  #       with:
+  #         sarif_file: trivy-repo.sarif
 
   codeQL:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?
