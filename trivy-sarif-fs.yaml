@@ -1,3 +1,5 @@
+# SRC: https://aquasecurity.github.io/trivy/v0.33/docs/references/customization/config-file/
+
 scan-type: fs
 ignorefile: .trivyignore
 ignore-unfixed: true

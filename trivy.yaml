@@ -1,4 +1,4 @@
-# SRC: https://aquasecurity.github.io/trivy/v0.33/docs/references/customization/config-file/#global-options
+# SRC: https://aquasecurity.github.io/trivy/v0.33/docs/references/customization/config-file/
 
 # debug: true
 format: table
