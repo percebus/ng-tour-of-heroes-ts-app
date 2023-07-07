@@ -5,10 +5,13 @@ on:
 env:
   NODE_VERSION: "18.x"
   DOCKER_BUILDKIT: 1
+  TRIVY_SCANNERS: vuln,secret,config
+  TRIVY_SEVERITY: CRITICAL,HIGH
+  TRIVY_IMAGE_REF: ${{ github.event.repository.name }}:${{ github.sha }}
 
 jobs:
-  verify:
-    name: Verify
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -45,9 +48,9 @@ jobs:
           name: dist
           path: dist
 
-  verify_node:
+  builds:
     if: github.ref == 'refs/heads/main'
-    needs: verify
+    needs: build
     strategy:
       max-parallel: 6
       matrix:
@@ -57,7 +60,7 @@ jobs:
           - macOS-latest
           # - windows-latest # TODO? too slow
     runs-on: ${{ matrix.os }}
-    name: Verify @ node:${{ matrix.node }}@${{ matrix.os }}
+    name: Build @ node:${{ matrix.node }}@${{ matrix.os }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -79,7 +82,7 @@ jobs:
 
   Dockerfile:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?
-    needs: verify
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -124,13 +127,14 @@ jobs:
       - name: ls
         run: ls -la
       - name: docker build
-        run: docker build -t ${{ github.event.repository.name }}:${{ github.sha }} .
+        run: docker build . -t ${{ env.TRIVY_IMAGE_REF }}
       - name: trivy
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: image
-          image-ref: "${{ github.event.repository.name }}:${{ github.sha }}"
-          severity: CRITICAL,HIGH
+          image-ref: ${{ env.TRIVY_IMAGE_REF }}
+          scanners: ${{ env.TRIVY_SCANNERS }}
+          severity: ${{ env.TRIVY_SEVERITY }}
           format: sarif
           output: trivy-Dockerfile.sarif
 
@@ -142,7 +146,7 @@ jobs:
 
   trivy_fs:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?
-    needs: verify
+    needs: build
     name: trivy:fs
     runs-on: ubuntu-latest
     permissions:
@@ -158,9 +162,10 @@ jobs:
           scan-type: fs
           scan-ref: .
           ignore-unfixed: true
+          scanners: ${{ env.TRIVY_SCANNERS }}
+          severity: ${{ env.TRIVY_SEVERITY }}
           format: sarif
           output: trivy-fs.sarif
-          severity: CRITICAL
       - name: Upload .sarif file
         uses: github/codeql-action/upload-sarif@v2
         with:
@@ -169,7 +174,7 @@ jobs:
   # FIXME
   # trivy_repo:
   #   # if: github.ref == 'refs/heads/main' # TODO? or XXX?
-  #   needs: verify
+  #   needs: build
   #   name: trivy:repo
   #   runs-on: ubuntu-latest
   #   permissions:
@@ -192,9 +197,10 @@ jobs:
   #         scan-type: repo
   #         scan-ref: .
   #         ignore-unfixed: true
+  #         scanners: ${{ env.TRIVY_SCANNERS }}
+  #         severity: ${{ env.TRIVY_SEVERITY }}
   #         format: sarif
   #         output: trivy-repo.sarif
-  #         severity: CRITICAL
   #     - name: Upload .sarif file
   #       uses: github/codeql-action/upload-sarif@v2
   #       with:
@@ -202,7 +208,7 @@ jobs:
 
   codeQL:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?
-    needs: verify
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       actions: read

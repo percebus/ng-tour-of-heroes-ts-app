@@ -31,7 +31,11 @@
     "predev": "npm run style",
     "dev": "npm run ng:serve",
     "http-server": "http-server ./dist",
+    "docker:build": "docker build . -t ng-tour-of-heroes-ts-app:latest",
     "docker:compose:up": "docker compose up --build --remove-orphans",
+    "trivy": "trivy --scanners vuln,secret,config",
+    "trivy:fs": "npm run trivy -- fs .",
+    "trivy:image": "npm run trivy -- image ng-tour-of-heroes-ts-app:latest",
     "prestart": "npm run browser:80",
     "start": "npm run docker:compose:up"
   },
