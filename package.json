@@ -33,7 +33,7 @@
     "http-server": "http-server ./dist",
     "docker:build": "docker build . -t ng-tour-of-heroes-ts-app:latest",
     "docker:compose:up": "docker compose up --build --remove-orphans",
-    "trivy:default": "trivy fs .",
+    "trivy:fs": "trivy fs .",
     "trivy:ci:fs": "trivy fs . --config trivy-sarif-fs.yaml",
     "trivy:ci:image": "trivy image ng-tour-of-heroes-ts-app:latest --config trivy-sarif-image.yaml",
     "prestart": "npm run browser:80",

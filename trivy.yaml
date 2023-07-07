@@ -1,9 +1,9 @@
-# SRC: https://aquasecurity.github.io/trivy/v0.33/docs/references/customization/config-file/
+# SRC: https://aquasecurity.github.io/trivy/v0.43/docs/references/configuration/config-file/
 
-# debug: true
+debug: true
 format: table
 ignorefile: .trivyignore
-security-checks: vuln,secret,config
+scanners: vuln,secret,config
 exit-code: 1
 hide-progress: false
 ignore-unfixed: true

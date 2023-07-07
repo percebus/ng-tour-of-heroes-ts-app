@@ -1,10 +1,10 @@
-# SRC: https://aquasecurity.github.io/trivy/v0.33/docs/references/customization/config-file/
+# SRC: https://aquasecurity.github.io/trivy/v0.43/docs/references/configuration/config-file/
 
+debug: true
 scan-type: fs
 ignorefile: .trivyignore
 ignore-unfixed: true
-security-checks: vuln,secret,config
+scanners: vuln,secret,config
 severity: CRITICAL,HIGH
 format: sarif
 output: trivy-fs.sarif
-limit-severities-for-sarif: true

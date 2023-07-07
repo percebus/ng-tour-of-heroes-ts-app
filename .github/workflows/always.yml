@@ -131,7 +131,7 @@ jobs:
         with:
           scan-type: image
           image-ref: ${{ env.TRIVY_IMAGE_REF }}
-          trivy-config: trivy-image.yaml
+          trivy-config: trivy-sarif-image.yaml
           limit-severities-for-sarif: true
 
       - name: "Upload .sarif file"
@@ -142,8 +142,8 @@ jobs:
 
   trivy_fs:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?
-    needs: build
     name: trivy:fs
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       actions: read
