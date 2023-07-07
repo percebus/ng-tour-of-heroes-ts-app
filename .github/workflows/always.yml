@@ -110,7 +110,7 @@ jobs:
         with:
           up-flags: "--build --remove-orphans"
 
-  trivy_Dockerfile:
+  trivy_image:
     # if: github.ref == 'refs/heads/main' # TODO
     name: trivy:Dockerfile
     needs: Dockerfile
@@ -132,12 +132,13 @@ jobs:
           scan-type: image
           image-ref: ${{ env.TRIVY_IMAGE_REF }}
           trivy-config: trivy-image.yaml
+          limit-severities-for-sarif: true
 
       - name: "Upload .sarif file"
         uses: github/codeql-action/upload-sarif@v2
         if: always()
         with:
-          sarif_file: "trivy-image.sarif"
+          sarif_file: trivy-image.sarif
 
   trivy_fs:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?
@@ -156,7 +157,9 @@ jobs:
         with:
           scan-type: fs
           scan-ref: .
-          trivy-config: trivy-fs.yaml
+          trivy-config: trivy-sarif-fs.yaml
+          limit-severities-for-sarif: true
+
       - name: Upload .sarif file
         uses: github/codeql-action/upload-sarif@v2
         with:

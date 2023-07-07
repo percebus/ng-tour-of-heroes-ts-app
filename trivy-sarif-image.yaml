@@ -7,4 +7,3 @@ security-checks: vuln,secret,config
 severity: CRITICAL,HIGH
 format: sarif
 output: trivy-image.sarif
-limit-severities-for-sarif: true

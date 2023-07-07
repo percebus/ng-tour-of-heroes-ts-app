@@ -6,6 +6,5 @@ ignorefile: .trivyignore
 security-checks: vuln,secret,config
 exit-code: 1
 hide-progress: false
-list-all-pkgs: true
 ignore-unfixed: true
 dependency-tree: true
