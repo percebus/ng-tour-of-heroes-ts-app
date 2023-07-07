@@ -3,8 +3,10 @@ on:
   push:
 
 env:
-  NODE_VERSION: "18.x"
+  NODE_VERSION: 18.x
   DOCKER_BUILDKIT: 1
+  TRIVY_IMAGE_REF: ${{ github.event.repository.name }}:${{ github.sha }}
+  TRIVY_SCANNERS: vuln,secret,config
 
 jobs:
   build:
@@ -90,7 +92,7 @@ jobs:
           - test
           # - dist # gets invoked in http-server
           # - http-server # gets invoked in docker-compose
-    name: "Dockerfile target:${{ matrix.target }}"
+    name: Dockerfile target:${{ matrix.target }}
     steps:
       - uses: docker/build-push-action@v4
         name: docker build
@@ -105,9 +107,97 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: isbang/compose-action@v1.4.1
-        name: "docker compose"
+        name: docker compose
         with:
-          up-flags: "--build --remove-orphans"
+          up-flags: --build --remove-orphans
+
+  trivy_image:
+    if: github.ref == 'refs/heads/main'
+    name: "trivy: Dockerfile"
+    needs: docker-compose
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
+      contents: read # for actions/checkout to fetch code
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: ls
+        run: ls -la
+      - name: docker build
+        run: docker build . -t ${{ env.TRIVY_IMAGE_REF }}
+      - name: trivy image
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: image
+          scanners: ${{ env.TRIVY_SCANNERS }}
+          image-ref: ${{ env.TRIVY_IMAGE_REF }}
+          trivy-config: trivy-sarif-image.yaml
+          limit-severities-for-sarif: true
+
+      - name: Upload .sarif file
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: trivy-image.sarif
+
+  trivy_fs:
+    # if: github.ref == 'refs/heads/main' # TODO? or XXX?
+    name: "trivy: fs"
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: trivy fs
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: ${{ env.TRIVY_SCANNERS }}
+          trivy-config: trivy-sarif-fs.yaml
+          limit-severities-for-sarif: true
+
+      - name: Upload .sarif file
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: trivy-fs.sarif
+
+  # FIXME
+  # trivy_repo:
+  #   # if: github.ref == 'refs/heads/main' # TODO? or XXX?
+  #   needs: build
+  #   name: trivy:repo
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     actions: read
+  #     contents: read
+  #     security-events: write
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+
+  #     # FIXME:
+  #     # "FATAL	repository scan error:"
+  #     # "scan error: unable to initialize a scanner"
+  #     # "unable to initialize a repository scanner"
+  #     # "git clone error: Get "https://./info/refs?service=git-upload-pack""
+  #     # "dial tcp: lookup . on X.X.X.X: no such host"
+  #     - name: trivy:repo
+  #       uses: aquasecurity/trivy-action@master
+  #       with:
+  #         scan-type: repo
+  #         scan-ref: .
+  #         trivy-config: trivy-repo.yaml
+  #     - name: Upload .sarif file
+  #       uses: github/codeql-action/upload-sarif@v2
+  #       with:
+  #         sarif_file: trivy-repo.sarif
 
   codeQL:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?

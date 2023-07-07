@@ -1,0 +1,10 @@
+# SRC: https://aquasecurity.github.io/trivy/v0.43/docs/references/configuration/config-file/
+
+debug: true
+format: table
+ignorefile: .trivyignore
+exit-code: 1
+scanners: vuln,secret,config # FIXME: its getting ignored
+hide-progress: false
+ignore-unfixed: true
+dependency-tree: true
