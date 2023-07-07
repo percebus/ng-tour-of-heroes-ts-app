@@ -1,0 +1,8 @@
+scan-type: fs
+trivyignores: .trivyignore
+ignore-unfixed: true
+scanners: vuln,secret,config
+severity: CRITICAL,HIGH
+format: sarif
+output: trivy-fs.sarif
+limit-severities-for-sarif: true

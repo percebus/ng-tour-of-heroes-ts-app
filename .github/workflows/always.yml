@@ -5,8 +5,6 @@ on:
 env:
   NODE_VERSION: "18.x"
   DOCKER_BUILDKIT: 1
-  TRIVY_SCANNERS: vuln,secret,config
-  TRIVY_SEVERITY: CRITICAL,HIGH
   TRIVY_IMAGE_REF: ${{ github.event.repository.name }}:${{ github.sha }}
 
 jobs:
@@ -133,16 +131,13 @@ jobs:
         with:
           scan-type: image
           image-ref: ${{ env.TRIVY_IMAGE_REF }}
-          scanners: ${{ env.TRIVY_SCANNERS }}
-          severity: ${{ env.TRIVY_SEVERITY }}
-          format: sarif
-          output: trivy-Dockerfile.sarif
+          trivy-config: trivy-image.yaml
 
       - name: "Upload .sarif file"
         uses: github/codeql-action/upload-sarif@v2
         if: always()
         with:
-          sarif_file: "trivy-Dockerfile.sarif"
+          sarif_file: "trivy-image.sarif"
 
   trivy_fs:
     # if: github.ref == 'refs/heads/main' # TODO? or XXX?
@@ -161,11 +156,7 @@ jobs:
         with:
           scan-type: fs
           scan-ref: .
-          ignore-unfixed: true
-          scanners: ${{ env.TRIVY_SCANNERS }}
-          severity: ${{ env.TRIVY_SEVERITY }}
-          format: sarif
-          output: trivy-fs.sarif
+          trivy-config: trivy-fs.yaml
       - name: Upload .sarif file
         uses: github/codeql-action/upload-sarif@v2
         with:
@@ -196,11 +187,7 @@ jobs:
   #       with:
   #         scan-type: repo
   #         scan-ref: .
-  #         ignore-unfixed: true
-  #         scanners: ${{ env.TRIVY_SCANNERS }}
-  #         severity: ${{ env.TRIVY_SEVERITY }}
-  #         format: sarif
-  #         output: trivy-repo.sarif
+  #         trivy-config: trivy-repo.yaml
   #     - name: Upload .sarif file
   #       uses: github/codeql-action/upload-sarif@v2
   #       with:

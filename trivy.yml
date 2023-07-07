@@ -3,6 +3,7 @@
 # debug: true
 format: table
 exit-code: 1
+hide-progress: false
 list-all-pkgs: true
 ignore-unfixed: true
 dependency-tree: true
