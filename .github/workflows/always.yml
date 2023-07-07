@@ -131,7 +131,7 @@ jobs:
         with:
           scan-type: image
           image-ref: ${{ env.TRIVY_IMAGE_REF }}
-          trivy-config: trivy-image.yaml
+          trivy-config: trivy-image.yml
 
       - name: "Upload .sarif file"
         uses: github/codeql-action/upload-sarif@v2
@@ -156,7 +156,7 @@ jobs:
         with:
           scan-type: fs
           scan-ref: .
-          trivy-config: trivy-fs.yaml
+          trivy-config: trivy-fs.yml
       - name: Upload .sarif file
         uses: github/codeql-action/upload-sarif@v2
         with:
