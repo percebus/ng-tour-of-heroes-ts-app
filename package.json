@@ -23,7 +23,7 @@
     "style": "npm run prettier:write && npm run ng:lint:fix",
     "pretest": "npm run style",
     "test": "npm run jest:watch",
-    "test:e2e": "npm run ng:e2e",
+    "test:e2e": "ng e2e",
     "pretest:ci": "npm run lint",
     "test:ci": "npm run jest:runInBand",
     "dist": "npm run ng:build",
